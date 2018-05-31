@@ -106,12 +106,14 @@ public class StockMonitor {
                 if (dateFormat.parse(recentRecord.getSendTime()).getTime() + 60 * 60 * 1000 < dateFormat.parse(nowDate).getTime()) {
                     // 向所有邮箱发送信息
                     List<Email> emailList = emailRepository.findAll();
-                    for (Email email : emailList) {
-                        Record record = new Record();
-                        record.setSendTime(nowDate);
-                        record.setAimAddress(email.getEmailAddress());
-                        recordRepository.save(record);
-                        emailSender.sendEmail(msg, email.getEmailAddress());
+                    if (emailList.size() > 0) {
+                        for (Email email : emailList) {
+                            Record record = new Record();
+                            record.setSendTime(nowDate);
+                            record.setAimAddress(email.getEmailAddress());
+                            recordRepository.save(record);
+                            emailSender.sendEmail(msg, email.getEmailAddress());
+                        }
                     }
 
                 } else {
@@ -123,12 +125,14 @@ public class StockMonitor {
                 String nowDate = dateFormat.format(new Date());
                 // 向所有邮箱发送信息
                 List<Email> emailList = emailRepository.findAll();
-                for (Email email : emailList) {
-                    Record record = new Record();
-                    record.setSendTime(nowDate);
-                    record.setAimAddress(email.getEmailAddress());
-                    recordRepository.save(record);
-                    emailSender.sendEmail(msg, email.getEmailAddress());
+                if (emailList.size() > 0) {
+                    for (Email email : emailList) {
+                        Record record = new Record();
+                        record.setSendTime(nowDate);
+                        record.setAimAddress(email.getEmailAddress());
+                        recordRepository.save(record);
+                        emailSender.sendEmail(msg, email.getEmailAddress());
+                    }
                 }
             }
         }
